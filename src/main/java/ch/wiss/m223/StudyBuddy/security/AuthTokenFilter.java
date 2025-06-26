@@ -43,10 +43,18 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7, headerAuth.length());
+        if (StringUtils.hasText(headerAuth)) {
+            String lower = headerAuth.toLowerCase();
+            if (lower.startsWith("bearer ")) {
+                return headerAuth.substring(7);
+            }
+            return headerAuth;
         }
-        logger.error("Cannot extract Bearer Token");
+        String paramToken = request.getParameter("token");
+        if (StringUtils.hasText(paramToken)) {
+            return paramToken;
+        }
+        logger.debug("No Bearer token found");
         return null;
     }
 
