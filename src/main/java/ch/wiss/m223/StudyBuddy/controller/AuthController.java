@@ -102,15 +102,14 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
-            roles.add(roleRepository.findByName(ERole.ROLE_USER).get());
+            roles.add(roleRepository.findByName(ERole.ROLE_STUDENT).get());
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin":
-                        roles.add(roleRepository.findByName(ERole.ROLE_ADMIN).get());
-                        break;
-                    default:
-                        roles.add(roleRepository.findByName(ERole.ROLE_USER).get());
+                    case "admin" -> roles.add(roleRepository.findByName(ERole.ROLE_ADMIN).get());
+                    case "teacher" -> roles.add(roleRepository.findByName(ERole.ROLE_TEACHER).get());
+                    case "student" -> roles.add(roleRepository.findByName(ERole.ROLE_STUDENT).get());
+                    default -> roles.add(roleRepository.findByName(ERole.ROLE_STUDENT).get());
                 }
             });
         }
