@@ -1,0 +1,3 @@
+[submodule "StudyBuddy"]
+	path = StudyBuddy
+	url = git@github.com:7Downzy/StudyBuddy.git
